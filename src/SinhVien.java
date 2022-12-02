@@ -5,7 +5,10 @@ public class SinhVien {
     private String hoTen;
     private String gioiTinh;
     private String diaChi;
-    private int soDienThoai;
+    private String soDienThoai;
+    private double diemToan;
+    private double diemLy;
+    private double diemHoa;
     private double diemTrungBinh;
     private String xepLoai;
 
@@ -14,12 +17,18 @@ public class SinhVien {
     public SinhVien() {
     }
 
-    public SinhVien(int maSoSinhVien, String hoTen, String gioiTinh, String diaChi, int soDienThoai) {
+    public SinhVien(int maSoSinhVien, String hoTen, String gioiTinh, String diaChi, String soDienThoai,
+                    double diemToan, double diemLy, double diemHoa) {
         this.maSoSinhVien = maSoSinhVien;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
+        this.diemToan = diemToan;
+        this.diemLy = diemLy;
+        this.diemHoa = diemHoa;
+        this.diemTrungBinh = tinhDiemTrungBinh(diemToan,diemLy,diemHoa);
+        this.xepLoai = xepLoaiSinhVien(diemTrungBinh);
     }
 
     public int getMaSoSinhVien() {
@@ -54,12 +63,36 @@ public class SinhVien {
         this.diaChi = diaChi;
     }
 
-    public int getSoDienThoai() {
+    public String getSoDienThoai() {
         return soDienThoai;
     }
 
-    public void setSoDienThoai(int soDienThoai) {
+    public void setSoDienThoai(String soDienThoai) {
         this.soDienThoai = soDienThoai;
+    }
+
+    public double getDiemToan() {
+        return diemToan;
+    }
+
+    public void setDiemToan(double diemToan) {
+        this.diemToan = diemToan;
+    }
+
+    public double getDiemLy() {
+        return diemLy;
+    }
+
+    public void setDiemLy(double diemLy) {
+        this.diemLy = diemLy;
+    }
+
+    public double getDiemHoa() {
+        return diemHoa;
+    }
+
+    public void setDiemHoa(double diemHoa) {
+        this.diemHoa = diemHoa;
     }
 
     public double getDiemTrungBinh() {
@@ -74,12 +107,11 @@ public class SinhVien {
         return xepLoai;
     }
 
-    public void setXepLoai(double diemTrungBinh) {
-        diemTrungBinh = this.diemTrungBinh;
+    public void setXepLoai(String xepLoai) {
         this.xepLoai = xepLoai;
     }
 
-    public void nhapThongTinSinhVien(){
+    public void nhapThongTinSinhVien() {
         System.out.println("Nhập thông tin sinh viên");
         System.out.print("Nhập MSSV: ");
         String mssv = sc.nextLine();
@@ -103,8 +135,42 @@ public class SinhVien {
         setHoTen(hoTen);
         setGioiTinh(gioiTinh);
         setDiaChi(diaChi);
-        setSoDienThoai(Integer.parseInt(sdt));
+        setSoDienThoai(sdt);
+        setDiemToan(Double.parseDouble(diemToan));
+        setDiemLy(Double.parseDouble(diemLy));
+        setDiemHoa(Double.parseDouble(diemHoa));
 
+    }
+
+    public String xuatThongTinSinhVien() {
+        return "maSoSinhVien=" + maSoSinhVien +
+                ", hoTen= '" + hoTen + '\'' +
+                ", gioiTinh= '" + gioiTinh + '\'' +
+                ", diaChi= '" + diaChi + '\'' +
+                ", soDienThoai= " + soDienThoai +
+                ", diemToan= " + diemToan +
+                ", diemLy= " + diemLy +
+                ", diemHoa= " + diemHoa +
+                ", diemTrungBinh= %.2f" + diemTrungBinh +
+                ", xepLoai='" + xepLoai + '\'';
+    }
+
+    public double tinhDiemTrungBinh(double diemToan, double diemLy, double diemHoa){
+        this.diemTrungBinh = (diemToan+diemLy+diemHoa)/3;
+        return this.diemTrungBinh;
+    }
+
+    public String xepLoaiSinhVien(double diemTrungBinh){
+        if (diemTrungBinh < 5) {
+            this.xepLoai = "Kem";
+        } else if (5 <= diemTrungBinh &&  diemTrungBinh < 7.5) {
+            this.xepLoai = "Trung Binh";
+        }else if (7.5 <= diemTrungBinh &&  diemTrungBinh < 8.5 ) {
+            this.xepLoai = "Kha";
+        }else if (8.5 <= diemTrungBinh ) {
+            this.xepLoai = "Gioi";
+        }
+        return this.xepLoai;
     }
 
 }
